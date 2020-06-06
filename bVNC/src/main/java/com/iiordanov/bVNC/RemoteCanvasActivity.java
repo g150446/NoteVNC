@@ -156,6 +156,7 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     ImageButton keyEsc;
     ImageButton keyShift;
     boolean keyShiftToggled;
+    ImageButton keyBackspace;
     ImageButton keyUp;
     ImageButton keyDown;
     ImageButton keyLeft;
@@ -806,6 +807,28 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
         
         // TODO: Evaluate whether I should instead be using:
         // vncCanvas.sendMetaKey(MetaKeyBean.keyArrowLeft);
+
+        // Define action of arrow keys.
+        keyBackspace = (ImageButton) findViewById(R.id.keyBackspace);
+        keyBackspace.setOnTouchListener(new OnTouchListener () {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent e) {
+                RemoteKeyboard k = canvas.getKeyboard();
+                int key = KeyEvent.KEYCODE_DEL;
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    myVibrator.vibrate(RemoteClientLibConstants.SHORT_VIBRATION);
+
+                    k.repeatKeyEvent(key, new KeyEvent(e.getAction(), key));
+                    return true;
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+
+                    resetOnScreenKeys (0);
+                    k.stopRepeatingKeyEvent();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // Define action of arrow keys.
         keyUp = (ImageButton) findViewById(R.id.keyUpArrow);
