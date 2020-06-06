@@ -1403,6 +1403,8 @@ public class RemoteCanvasActivity extends AppCompatActivity implements OnKeyList
     public boolean onKey(View v, int keyCode, KeyEvent evt) {
 
         boolean consumed = false;
+
+        Log.d("MyTag","onKey:"+keyCode);
         
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             if (evt.getAction() == KeyEvent.ACTION_DOWN)
